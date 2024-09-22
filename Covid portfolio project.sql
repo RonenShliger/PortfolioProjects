@@ -50,12 +50,10 @@ where continent is not NUll
 group by date 
 order by 1,2 
 
--- join
+
 -- Total population vs vaccinations
 
-
 --USE CTE
-
 with PopvsVac (continent, location, date, Population, new_vaccinations ,RollingPepoleVaccinated)
 as
 (
@@ -100,8 +98,7 @@ from #PercentPopulationVaccinated
 
 
 
--- Creating View to store data fo later visualizations
-
+-- Creating View to store data for later visualizations
 Create View PercentPopulationVaccinated as 
 select dea.continent,dea.location ,dea.date ,dea.population, vac.new_vaccinations
 ,SUM(vac.new_vaccinations) OVER (PARTITION by dea.location order by dea.location, dea.date)
@@ -111,7 +108,6 @@ join PortfolioProject..CovidVaccinations vac
 	on dea.location = vac.location
 	and dea.date = vac.date
 where dea.continent is not null
-
 
 select *
 from PercentPopulationVaccinated
